@@ -3,4 +3,4 @@ Flask-SQLAlchemy
 Flask-Mail
 Flask-APScheduler
 python-dotenv
-
+gunicorn
