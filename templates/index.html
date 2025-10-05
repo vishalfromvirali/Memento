@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="static/icon.png">
+    <title>Memento</title>
+</head>
+<body style="font-size: x-large;
+             background-image: url('{{ url_for('static', filename='image.jpg') }}');
+             background-attachment: fixed;
+             background-repeat: no-repeat;
+             background-position: center center;
+             background-size: cover; ">
+         <center  >
+        <H1 style="color: rgb(0, 0, 0); font-family: 'Times New Roman', Times, serif;">Memento </H1>
+        <div style="margin-top: 1px;padding-left: 50%;">
+        <form action="{{ url_for('post') }}" method="POST">
+        
+       <div style="
+    /* Wrapper to organize the elements, making them block-level and spaced */
+    display: flex; 
+    flex-direction: column; 
+    gap: 10px; 
+    max-width: 400px; 
+    padding: 10px; 
+    background-color: #f7f7f7; /* Light background for contrast */
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Soft container shadow */
+">
+    <input type="text" 
+        name="title" 
+        placeholder="Enter new task here..." 
+        required 
+        style="
+            /* Input Base Styles */
+            width: 90%;
+            padding: 12px 15px; /* Use consistent padding */
+            border-radius: 8px; 
+            border: 2px solid #e0e0e0; /* Light, soft border */
+            
+            /* Premium Look */
+            font-size: 16px;
+            color: #333;
+            background-color: white;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06) inset; /* Soft inner shadow for depth */
+            transition: border-color 0.3s, box-shadow 0.3s;
+            /* Placeholder Color (needs <style> or a wrapper hack, so setting a dark text for contrast) */
+            /* Focus effect is limited with inline styles, but the border color is a good start. */
+            outline: none;
+            /* For the required border-color: */
+            border-color: rgb(52, 0, 52); /* Using the requested purple as the main color */
+        ">
+        
+    <input type="email" 
+        name="mail" 
+        placeholder="Enter mail here..." 
+        required 
+        style="
+            /* Input Base Styles (same as above for consistency) */
+            width: 90%;
+            padding: 12px 15px;
+            border-radius: 8px; 
+            border: 2px solid #e0e0e0; 
+            
+            /* Premium Look */
+            font-size: 16px;
+            color: #333;
+            background-color: white;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06) inset;
+            transition: border-color 0.3s, box-shadow 0.3s;
+            outline: none;
+            /* For the required border-color: */
+            border-color: rgb(52, 0, 52);
+        ">  
+        
+    <input type="datetime-local" 
+        name="time_remainder" 
+        placeholder="Enter time here..." 
+        required 
+        style="
+            /* Input Base Styles (same as above for consistency) */
+            width: 90%;
+            padding: 12px 15px;
+            border-radius: 8px; 
+            border: 2px solid #e0e0e0; 
+            
+            /* Premium Look */
+            font-size: 16px;
+            color: #333;
+            background-color: white;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06) inset;
+            transition: border-color 0.3s, box-shadow 0.3s;
+            outline: none;
+            /* For the required border-color: */
+            border-color: rgb(52, 0, 52);
+        ">      
+        
+    <button class="button" type="submit" 
+        style="
+            /* Button Base Styles */
+            width: 100%;
+            padding: 14px 25px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            
+            /* Premium Look: Deep Purple Gradient */
+            background: linear-gradient(135deg, rgb(61, 2, 61), rgb(110, 40, 110)); /* Gradient */
+            color: white; 
+            font-size: 18px; 
+            font-weight: bold;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            
+            /* Shadow for Lifted, Premium Feel */
+            box-shadow: 0 6px 15px rgba(52, 0, 52, 0.4), 0 2px 4px rgba(0, 0, 0, 0.15); 
+            
+            /* Smooth Transition (for hover/active, though limited with inline style) */
+            transition: all 0.3s ease;
+            
+            /* Remove Times New Roman from your previous button for a cleaner, modern look */
+            font-family: Arial, sans-serif;
+            margin-top: 10px; /* Space above the button */
+        "
+         onmouseover="this.style.color='white'; this.style.boxShadow='0 8px 20px rgba(52, 0, 52, 0.6), 0 3px 6px rgba(0, 0, 0, 0.2)'; this.style.transform='translateY(-2px)'"
+    onmouseout="this.style.color='white'; this.style.boxShadow='0 6px 15px rgba(52, 0, 52, 0.4), 0 2px 4px rgba(0, 0, 0, 0.15)'; this.style.transform='translateY(0)'"
+        >
+        ADD TASK
+    </button>
+</div>
+        </form>
+    </div>
+   <div style="padding: 10px 0; display: flex; flex-direction: column; align-items: center;padding-left: 50%;">
+
+    {% for user in todo_list %}
+        <div style="
+            width: 65%;
+            max-width: 650px; /* reduced for balanced layout */
+            margin-top: 25px;
+            position: relative;
+            /* PRO GLASSMORPHISM V2 */
+            border-radius: 24px;
+            padding: 28px 30px; /* tighter padding */
+            /* Radial gradient for a better light source effect */
+            background: radial-gradient(circle at top left, rgba(255,255,255,0.5), rgba(255,255,255,0.2));
+            backdrop-filter: blur(25px) saturate(180%);
+            border: 1.5px solid rgba(255,255,255,0.4); /* Cleaner border */
+            overflow: hidden;
+            
+            /* UNIQUE 3D and Hover Setup */
+            box-shadow: 0 5px 20px rgba(50, 0, 80, 0.2), inset 0 0 8px rgba(255, 255, 255, 0.15); /* Default inner shadow for depth */
+            transform: perspective(1000px) translateY(0) rotateY(0deg);
+            transition: all 0.5s cubic-bezier(0.25, 0.6, 0.4, 1);
+        "
+        onmouseover="
+            /* Lift, Scale, and Subtle Y-Axis Rotation for unique flair */
+            this.style.transform='perspective(1000px) translateY(-8px) scale(1.03) rotateY(-1deg)'; 
+            /* Deepened shadow and a bright white inner glow (light reflection) */
+            this.style.boxShadow='0 20px 50px rgba(50, 0, 75, 0.5), inset 0 0 45px rgba(255, 255, 255, 0.4)';
+            this.style.backgroundColor='rgba(255, 255, 255, 0.7)';
+            this.style.borderColor='rgba(255, 255, 255, 0.7)';"
+        onmouseout="
+            this.style.transform='perspective(1000px) translateY(0) scale(1) rotateY(0deg)';
+            this.style.boxShadow='0 5px 20px rgba(50, 0, 80, 0.2), inset 0 0 8px rgba(255, 255, 255, 0.15)';
+            this.style.backgroundColor='rgba(255, 255, 255, 0.4)';
+            this.style.borderColor='rgba(255, 255, 255, 0.4)';">
+
+            <!-- Title Section -->
+            <div style="border-bottom: 1px solid rgba(0, 0, 0, 0.15); padding-bottom: 10px; margin-bottom: 18px; width: 100%;">
+                <span style="color:#222; font-weight:700; font-size:1.15rem; letter-spacing:0.5px; font-family:'Inter', sans-serif;">📘 Task:</span>
+                <span style="color:#5E35B1; font-weight:900; font-size:1.5rem; text-shadow: 0 1px 3px rgba(94, 53, 177, 0.3); font-family:'Inter', sans-serif;">{{ user.title }}</span>
+            </div>
+
+            <!-- Details Section -->
+            <div style="display: flex; flex-direction: column; align-items: flex-start; width: 100%;">
+                <h3 style="color:#7E57C2; margin-bottom: 6px; font-weight:600; font-family:'Inter', sans-serif; font-size:1rem;">
+                    📧 Recipient: <b style='color:#54009E; font-weight:700;'>{{ user.mail }}</b>
+                </h3>
+
+                <h3 style="color:#B39DDB; margin-bottom: 14px; font-weight:600; font-family:'Inter', sans-serif; font-size:1rem;">
+                    ⏰ Reminder: <b style='color:#673AB7; font-weight:700;'>{{ user.time }}</b>
+                </h3>
+            </div>
+
+            <!-- Status Badge -->
+            <div style="width: 100%; margin-top: 5px;">
+                {% if user.completed == True %}
+                    <span style="
+                        display: inline-block; 
+                        padding: 8px 18px; 
+                        border-radius: 50px; 
+                        /* New gradient background for status */
+                        background: linear-gradient(90deg, #A5D6A7, #81C784);
+                        color: #1B5E20; 
+                        font-weight: 700; 
+                        font-size: 0.95rem;
+                        box-shadow: 0 2px 8px rgba(27, 94, 32, 0.3);
+                        font-family:'Inter', sans-serif;
+                        letter-spacing: 0.5px;
+                        text-transform: uppercase;
+                    ">
+                        ✅ Reminder Sent
+                    </span>
+                {% else %}
+                    <span style="
+                        display: inline-block; 
+                        padding: 8px 18px; 
+                        border-radius: 50px; 
+                        /* New gradient background for status */
+                        background: linear-gradient(90deg, #FFCDD2, #E57373);
+                        color: #B71C1C; 
+                        font-weight: 700; 
+                        font-size: 0.95rem;
+                        box-shadow: 0 2px 8px rgba(183, 28, 28, 0.3);
+                        font-family:'Inter', sans-serif;
+                        letter-spacing: 0.5px;
+                        text-transform: uppercase;
+                    ">
+                        🔴 Active / Pending
+                    </span>
+                {% endif %}
+            </div>
+        </div>
+    {% endfor %}
+</div>
+
+
+    </center>
+    
+</body>
+</html>
