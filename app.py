@@ -12,7 +12,7 @@ app.config['SCHEDULER_API_ENABLED'] = True
 app.config['MAIL_SERVER']='smtp.gmail.com'
 app.config['MAIL_PORT']=587
 app.config['MAIL_USE_TLS']=True
-app.config['MAIL_USERNAME']=os.getenv('sender_mail')
+app.config['MAIL_USERNAME']='bb4106402@gmail.com'
 app.config['MAIL_PASSWORD']='qjrhwiwnscjlsvbi'
 
 mail=Mail(app)
@@ -46,7 +46,7 @@ def scheduler_run():
             if t==formated_time and to.completed==False:
                 msg = Message(
                 "Remainder", 
-                sender=os.getenv('sender_mail'), 
+                sender='bb4106402@gmail.com', 
                 recipients=[to.mail],
                 body=(f"Hey there! 👋 Just sliding into your notifications with a gentle, but firm, nudge. It looks like the universe is still waiting for you to complete {to.title}. Don't let that amazing idea gather dust! You've already done the hard work of starting—now, let's smash that finish line. Quick, dive back in and get it done! You got this!")
 
